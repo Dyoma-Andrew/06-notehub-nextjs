@@ -40,6 +40,7 @@ export default function NotesClient() {
         perPage: PER_PAGE,
         search,
       }),
+    refetchOnMount: false,
     placeholderData: keepPreviousData,
   });
 
