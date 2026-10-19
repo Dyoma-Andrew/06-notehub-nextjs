@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient, keepPreviousData } from '@tansta
 import { useDebouncedCallback } from 'use-debounce';
 
 import { createNote, fetchNotes } from '../../lib/api';
-import type { CreateNoteRequest } from '../../lib/api';
+// import type { CreateNoteRequest } from '../../lib/api';
 
 import Modal from '../../components/Modal/Modal';
 import NoteForm from '../../components/NoteForm/NoteForm';
@@ -58,11 +58,11 @@ export default function NotesClient() {
     debouncedSearch(value);
   };
 
-  const handleCreateNote = async (note: CreateNoteRequest) => {
-    try {
-      await createMutation.mutateAsync(note);
-    } catch {}
-  };
+  // const handleCreateNote = async (note: CreateNoteRequest) => {
+  //   try {
+  //     await createMutation.mutateAsync(note);
+  //   } catch {}
+  // };
 
   return (
     <div className={css.app}>
@@ -96,11 +96,7 @@ export default function NotesClient() {
       {isModalOpen && (
         <Modal onClose={closeModal}>
           {createMutation.isError && <p role="alert">Failed to create note. Please try again.</p>}
-          <NoteForm
-            onCancel={closeModal}
-            onSubmit={handleCreateNote}
-            isSubmitting={createMutation.isPending}
-          />
+          <NoteForm onCancel={closeModal} />
         </Modal>
       )}
     </div>

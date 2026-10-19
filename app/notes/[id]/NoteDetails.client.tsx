@@ -38,7 +38,6 @@ const NoteDetailsClient = () => {
           <p className={css.tag}>{note.tag}</p>
           <p className={css.content}>{note.content}</p>
           <p className={css.date}>Created At: {note.createdAt}</p>
-          <p className={css.date}>Updated At: {note.updatedAt}</p>
         </div>
       </div>
     </main>
