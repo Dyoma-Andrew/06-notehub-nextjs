@@ -4,20 +4,19 @@ import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient, keepPreviousData } from '@tanstack/react-query';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { createNote, fetchNotes } from '../../lib/api';
-// import type { CreateNoteRequest } from '../../lib/api';
+import { createNote, fetchNotes } from '@/lib/api';
 
-import Modal from '../../components/Modal/Modal';
-import NoteForm from '../../components/NoteForm/NoteForm';
-import NoteList from '../../components/NoteList/NoteList';
-import Pagination from '../../components/Pagination/Pagination';
-import SearchBox from '../../components/SearchBox/SearchBox';
+import Modal from '@/components/Modal/Modal';
+import NoteForm from '@/components/NoteForm/NoteForm';
+import NoteList from '@/components/NoteList/NoteList';
+import Pagination from '@/components/Pagination/Pagination';
+import SearchBox from '@/components/SearchBox/SearchBox';
 
 import css from './Notes.module.css';
 
 const PER_PAGE = 12;
 
-export default function NotesClient() {
+export default function NotesClient({ tag }: { tag: string }) {
   const queryClient = useQueryClient();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,12 +32,13 @@ export default function NotesClient() {
   }, 500);
 
   const { data, isPending, isError } = useQuery({
-    queryKey: ['notes', page, PER_PAGE, search],
+    queryKey: ['notes', page, PER_PAGE, search, tag],
     queryFn: () =>
       fetchNotes({
         page,
         perPage: PER_PAGE,
         search,
+        tag,
       }),
     refetchOnMount: false,
     placeholderData: keepPreviousData,

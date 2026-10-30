@@ -1,4 +1,4 @@
-import { useEffect, type MouseEvent, type ReactNode } from 'react';
+import { useEffect, useState, type MouseEvent, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import css from './Modal.module.css';
 
@@ -8,6 +8,10 @@ interface ModalProps {
 }
 
 export default function Modal({ onClose, children }: ModalProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
   const handleBackdropClick = (event: MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       onClose();
@@ -31,6 +35,8 @@ export default function Modal({ onClose, children }: ModalProps) {
       document.body.style.overflow = previousOverflow;
     };
   }, [onClose]);
+
+  if (!mounted) return null;
 
   return createPortal(
     <div className={css.backdrop} onClick={handleBackdropClick} role="dialog" aria-modal="true">
